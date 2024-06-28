@@ -2,7 +2,7 @@ import { Input, Stack, useToast, Text, Flex, Button } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import { userSettingsTable } from "../db-tables/WorkspaceDB";
 import { WorkspaceContext } from "../WorkspaceContext";
-import { saveShareKey } from "../utils/saveShareKey";
+// import { saveShareKey } from "../utils/saveShareKey";
 
 export default function SharekeySetting() {
   const toast = useToast();

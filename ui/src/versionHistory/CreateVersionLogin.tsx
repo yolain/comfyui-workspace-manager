@@ -2,7 +2,7 @@ import { Button, Flex, Input, Stack, useToast } from "@chakra-ui/react";
 import { userSettingsTable } from "../db-tables/WorkspaceDB";
 import { useContext } from "react";
 import { WorkspaceContext } from "../WorkspaceContext";
-import { saveShareKey } from "../utils/saveShareKey";
+// import { saveShareKey } from "../utils/saveShareKey";
 
 export default function CreateVersionLogin() {
   const cloudHost = userSettingsTable?.settings?.cloudHost;
@@ -48,7 +48,7 @@ export default function CreateVersionLogin() {
             return;
           }
 
-          saveShareKey(e.target.value);
+          // saveShareKey(e.target.value);
           updateSession({
             shareKey: e.target.value,
             username: null,

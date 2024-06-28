@@ -31,10 +31,11 @@ import {
   IconArrowBackUpDouble,
   IconChevronDown,
   IconDeviceFloppy,
-  IconDownload,
+  IconDownload, IconFolder,
   IconHistory,
-  IconShare2,
+  IconShare2, IconTriangleInvertedFilled,
   IconVersions,
+  IconFile
 } from "@tabler/icons-react";
 import { workflowsTable, userSettingsTable } from "../db-tables/WorkspaceDB";
 import { WorkspaceContext } from "../WorkspaceContext";
@@ -122,16 +123,10 @@ export default function DropdownTitle() {
       <HoverMenu
         menuButton={
           <DarkMode>
-            <Button
-              px={1}
-              height={TOPBAR_BUTTON_HEIGHT + "px"}
-              aria-label="menu"
-              size={"sm"}
-              backgroundColor={"#434554"}
-            >
-              File
-              <IconChevronDown size={20} />
-            </Button>
+            <HStack gap={"2px"}>
+              <IconFile size={20} />
+              <IconTriangleInvertedFilled size={8} />
+            </HStack>
           </DarkMode>
         }
         menuContent={

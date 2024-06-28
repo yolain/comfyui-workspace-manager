@@ -1,5 +1,6 @@
-import { Button, DarkMode, Stack } from "@chakra-ui/react";
+import { Button, DarkMode, Stack, IconButton,Tooltip } from "@chakra-ui/react";
 import { lazy, useEffect, useContext, Suspense } from "react";
+import {IconBoxModel, IconPhoto} from "@tabler/icons-react";
 import ModelsListDrawer from "../models-list-drawer/ModelsListDrawer";
 import "./index.css";
 import { WorkspaceContext } from "../../WorkspaceContext";
@@ -12,6 +13,10 @@ import { indexdb } from "../../db-tables/indexdb";
 import type { ModelsListRespItemFromApi } from "../types";
 import InatallModelsModal from "../install-models/InstallModelsModal";
 import { TOPBAR_BUTTON_HEIGHT } from "../../const";
+
+const AddMissingModelsButton = lazy(
+  () => import("./InstallMissingModelsButton"),
+);
 
 export default function ModelManagerTopbar() {
   const { setRoute, route } = useContext(WorkspaceContext);
@@ -59,18 +64,20 @@ export default function ModelManagerTopbar() {
 
   return (
     <Stack style={{ position: "relative" }}>
-      <Button
-        size={"sm"}
-        backgroundColor={"#434554"}
-        color={"white"}
-        colorScheme="blue"
-        aria-label="My models"
-        onClick={() => setRoute("modelList")}
-        px={1}
-        height={TOPBAR_BUTTON_HEIGHT + "px"}
-      >
-        Models
-      </Button>
+      <Tooltip label="My models">
+        <IconButton
+          onClick={() => setRoute("modelList")}
+          icon={<IconBoxModel size={20} color="white" />}
+          size={"sm"}
+          aria-label="My models"
+          variant={"ghost"}
+        />
+      </Tooltip>
+      <div style={{ position: "absolute", top: "38px", left: "0px" }}>
+        <Suspense>
+          <AddMissingModelsButton />
+        </Suspense>
+      </div>
       {route === "modelList" && (
         <ModelsListDrawer onClose={() => setRoute("root")} />
       )}

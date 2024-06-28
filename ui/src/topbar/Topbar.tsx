@@ -24,7 +24,7 @@ import "./Topbar.css";
 import VersionNameTopbar from "./VersionNameTopbar";
 import { userSettingsTable, workflowsTable } from "../db-tables/WorkspaceDB";
 import { TOPBAR_BUTTON_HEIGHT } from "../const";
-import TopbarNewWorkflowButton from "./TopbarNewWorkflowButton";
+import TopbarNewWorkflowButton from "./TopbarNewWorkflowButton.tsx";
 const AppIsDirtyEventListener = lazy(() => import("./AppIsDirtyEventListener"));
 const ModelManagerTopbar = lazy(
   () => import("../model-manager/topbar/ModelManagerTopbar"),
@@ -102,14 +102,10 @@ export function Topbar({ curFlowName, setCurFlowName }: Props) {
           px={2}
         >
           <HStack gap={1}>
-            <IconFolder size={21} />
+            <IconFolder size={18} />
             <IconTriangleInvertedFilled size={8} />
           </HStack>
         </Button>
-        <Suspense fallback={<div style={{ width: "60px" }} />}>
-          <ModelManagerTopbar />
-        </Suspense>
-        <TopbarNewWorkflowButton />
         <EditFlowName
           isDirty={isDirty}
           displayName={curFlowName ?? ""}
@@ -120,36 +116,42 @@ export function Topbar({ curFlowName, setCurFlowName }: Props) {
             });
           }}
         />
-        {workflowsTable?.curWorkflow?.saveLock && (
-          <IconLock color="#FFF" size={20} />
-        )}
+        <HStack gap={"0px"}>
+          {workflowsTable?.curWorkflow?.saveLock && (
+            <IconLock color="#FFF" size={16} />
+          )}
+          {curFlowID && isDirty ? (
+            <HStack gap={"0px"}>
+              <Tooltip label="Save workflow">
+                <IconButton
+                  onClick={() => saveCurWorkflow()}
+                  icon={<IconDeviceFloppy size={20} color="white" />}
+                  size={"xs"}
+                  paddingY={4}
+                  aria-label="save workspace"
+                  variant={"ghost"}
+                />
+              </Tooltip>
+            </HStack>
+          ) : (
+            <div style={{ width: 1 }} />
+          )}
+          <TopbarNewWorkflowButton />
+        </HStack>
         {curFlowID && (
-          <HStack gap={"4px"}>
+          <HStack gap={"2px"}>
             <Tooltip label="Open gallery">
               <IconButton
                 onClick={() => setRoute("gallery")}
-                icon={<IconPhoto size={22} color="white" />}
+                icon={<IconPhoto size={18} color="white" />}
                 size={"sm"}
                 aria-label="open gallery"
                 variant={"ghost"}
               />
             </Tooltip>
+            <ModelManagerTopbar />
             <DropdownTitle />
           </HStack>
-        )}
-        {curFlowID && isDirty ? (
-          <Tooltip label="Save workflow">
-            <IconButton
-              onClick={() => saveCurWorkflow()}
-              icon={<IconDeviceFloppy size={23} color="white" />}
-              size={"xs"}
-              paddingY={4}
-              aria-label="save workspace"
-              variant={"ghost"}
-            />
-          </Tooltip>
-        ) : (
-          <div style={{ width: 1 }} />
         )}
         <VersionNameTopbar />
         <AppIsDirtyEventListener />
